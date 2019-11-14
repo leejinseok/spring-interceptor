@@ -4,6 +4,7 @@ import com.example.spring.config.JwtProperties;
 import com.example.spring.exception.NoJwtException;
 import com.example.spring.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -19,13 +20,14 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
   private final JwtUtil jwtUtil;
   private final JwtProperties jwtProperties;
 
-  public JwtInterceptor(JwtProperties jwtProperties, JwtUtil jwtUtil) {
+  @Autowired
+  public JwtInterceptor(final JwtProperties jwtProperties, final JwtUtil jwtUtil) {
     this.jwtProperties = jwtProperties;
     this.jwtUtil = jwtUtil;
   }
 
   @Override
-  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
     for (Cookie cookie : request.getCookies()) {
       String name = cookie.getName();
@@ -41,7 +43,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
   }
 
   @Override
-  public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+  public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
     request.removeAttribute("session");
   }
 }

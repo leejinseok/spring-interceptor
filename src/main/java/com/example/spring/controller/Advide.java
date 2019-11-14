@@ -14,7 +14,7 @@ public class Advide {
 
   @ExceptionHandler({BadCredentialsException.class, ExpiredJwtException.class, NoJwtException.class})
   @ResponseStatus(HttpStatus.UNAUTHORIZED)
-  public ErrorResponse custom(Exception exception) {
+  public ErrorResponse unauthroized(final Exception exception) {
     return new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), exception.getMessage());
   }
 }

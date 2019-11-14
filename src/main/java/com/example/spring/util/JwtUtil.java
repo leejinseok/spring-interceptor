@@ -25,11 +25,11 @@ public class JwtUtil {
   private final int plusDays = 3;
 
   @Autowired
-  public JwtUtil(JwtProperties jwtProperties) {
+  public JwtUtil(final JwtProperties jwtProperties) {
     this.jwtProperties = jwtProperties;
   }
 
-  public String generateToken(User user) {
+  public String generateToken(final User user) {
     Claims claims = Jwts.claims().setSubject(user.getUsername());
     LocalDateTime currentTime = LocalDateTime.now();
     LocalDateTime expireTime = currentTime.plusDays(plusDays);
@@ -43,7 +43,7 @@ public class JwtUtil {
       .compact();
   }
 
-  public User decodeToken(String token) {
+  public User decodeToken(final String token) {
     Jws<Claims> claims = generateClaims(token);
     User user = new User();
     user.setUsername(claims.getBody().getSubject());
@@ -55,13 +55,13 @@ public class JwtUtil {
     return new SecretKeySpec(secretByte, signatureAlgorithm.getJcaName());
   }
 
-  private Jws<Claims> generateClaims(String token) {
+  private Jws<Claims> generateClaims(final String token) {
     return Jwts.parser()
       .setSigningKey(generateSigingKey())
       .parseClaimsJws(token);
   }
 
-  private Date localDateTimeToDate(LocalDateTime time) {
+  private Date localDateTimeToDate(final LocalDateTime time) {
     return Date.from(time.atZone(ZoneId.systemDefault()).toInstant());
   }
 }

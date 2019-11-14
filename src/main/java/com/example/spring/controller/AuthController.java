@@ -21,33 +21,33 @@ public class AuthController {
   private final JwtProperties jwtProperties;
 
   @Autowired
-  public AuthController(UserService userService, CookieUtil cookieUtil, JwtProperties jwtProperties) {
+  public AuthController(final UserService userService, final CookieUtil cookieUtil, final JwtProperties jwtProperties) {
     this.userService = userService;
     this.cookieUtil = cookieUtil;
     this.jwtProperties = jwtProperties;
   }
 
   @PostMapping("/register")
-  public ResponseEntity<Integer> register(@RequestBody UserDto.RegisterRequest dto) {
+  public ResponseEntity<Integer> register(@RequestBody final UserDto.RegisterRequest dto) {
     int id = userService.register(dto.getUsername(), dto.getPassword()).getId();
     return new ResponseEntity<>(id, HttpStatus.CREATED);
   }
 
   @PostMapping("/login")
-  public ResponseEntity<String> login(@RequestBody UserDto.LoginRequest dto, HttpServletResponse resp) {
+  public ResponseEntity<String> login(@RequestBody final UserDto.LoginRequest dto, HttpServletResponse resp) {
     String token = userService.login(dto.getUsername(), dto.getPassword());
     cookieUtil.add(resp, jwtProperties.getName(), token, false, -1);
     return new ResponseEntity<>(token, HttpStatus.OK);
   }
 
   @PostMapping("/logout")
-  public ResponseEntity<String> logout(@RequestAttribute("session") User session, HttpServletResponse resp) {
+  public ResponseEntity<String> logout(@RequestAttribute("session") final User session, HttpServletResponse resp) {
     cookieUtil.clear(resp, jwtProperties.getName());
     return new ResponseEntity<>(session.getUsername(), HttpStatus.OK);
   }
 
   @GetMapping("/session")
-  public User test(@RequestAttribute("session") User session) {
+  public User session(@RequestAttribute("session") final User session) {
     return session;
   }
 }

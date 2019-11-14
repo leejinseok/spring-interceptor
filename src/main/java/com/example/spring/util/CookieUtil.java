@@ -18,7 +18,7 @@ public class CookieUtil {
     this.appProperties = appProperties;
   }
 
-  public void add(HttpServletResponse resp, String name, String value, Boolean secure, Integer maxAge) {
+  public void add(final HttpServletResponse resp, final String name, final String value, final Boolean secure, final Integer maxAge) {
     Cookie cookie = new Cookie(name, value);
     cookie.setSecure(secure);
     cookie.setHttpOnly(true);
@@ -28,7 +28,7 @@ public class CookieUtil {
     resp.addCookie(cookie);
   }
 
-  public void clear(HttpServletResponse resp, String name) {
+  public void clear(final HttpServletResponse resp, final String name) {
     Cookie cookie = new Cookie(name, null);
     cookie.setMaxAge(0);
     cookie.setHttpOnly(true);
