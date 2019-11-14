@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class User {
 
   public User() {}
-  public User(String username, String password) {
+  public User(final String username, final String password) {
     this.username = username;
     this.password = password;
   }
