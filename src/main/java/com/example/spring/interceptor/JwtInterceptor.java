@@ -1,5 +1,7 @@
 package com.example.spring.interceptor;
 
+import com.example.spring.config.JwtProperties;
+import com.example.spring.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,10 +16,23 @@ import java.util.logging.Logger;
 @Slf4j
 public class JwtInterceptor extends HandlerInterceptorAdapter {
 
+  private final JwtUtil jwtUtil;
+  private final JwtProperties jwtProperties;
+
+
+  public JwtInterceptor(JwtProperties jwtProperties, JwtUtil jwtUtil) {
+    this.jwtProperties = jwtProperties;
+    this.jwtUtil = jwtUtil;
+  }
+
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
     for (Cookie cookie : request.getCookies()) {
       log.info(cookie.getName(), cookie.getValue());
+      if (cookie.getName().equals(jwtProperties.getName())) {
+        String value = cookie.getValue();
+        request.setAttribute("session", jwtUtil.decodeToken(value));
+      }
     }
 
     return true;

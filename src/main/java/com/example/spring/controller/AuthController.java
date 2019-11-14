@@ -40,4 +40,9 @@ public class AuthController {
     cookieUtil.create(resp, jwtProperties.getName(), token, false, -1);
     return new ResponseEntity<>(token, HttpStatus.OK);
   }
+
+  @PostMapping("/logout")
+  public ResponseEntity<String> logout(@RequestAttribute("session") User session) {
+    return new ResponseEntity<>(session.getUsername(), HttpStatus.OK);
+  }
 }
