@@ -2,7 +2,6 @@ package com.example.spring.util;
 
 
 import com.example.spring.config.AppProperties;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.WebUtils;
 
