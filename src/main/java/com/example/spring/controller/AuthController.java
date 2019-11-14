@@ -42,7 +42,8 @@ public class AuthController {
   }
 
   @PostMapping("/logout")
-  public ResponseEntity<String> logout(@RequestAttribute("session") User session) {
+  public ResponseEntity<String> logout(@RequestAttribute("session") User session, HttpServletResponse resp) {
+    cookieUtil.clear(resp, jwtProperties.getName());
     return new ResponseEntity<>(session.getUsername(), HttpStatus.OK);
   }
 }

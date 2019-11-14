@@ -19,7 +19,6 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
   private final JwtUtil jwtUtil;
   private final JwtProperties jwtProperties;
 
-
   public JwtInterceptor(JwtProperties jwtProperties, JwtUtil jwtUtil) {
     this.jwtProperties = jwtProperties;
     this.jwtUtil = jwtUtil;
@@ -27,10 +26,12 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
 
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
     for (Cookie cookie : request.getCookies()) {
-      log.info(cookie.getName(), cookie.getValue());
-      if (cookie.getName().equals(jwtProperties.getName())) {
-        String value = cookie.getValue();
+      String name = cookie.getName();
+      String value = cookie.getValue();
+
+      if (name .equals(jwtProperties.getName()) && !value.isEmpty()) {
         request.setAttribute("session", jwtUtil.decodeToken(value));
       }
     }
@@ -40,5 +41,6 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
 
   @Override
   public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    request.removeAttribute("session");
   }
 }
