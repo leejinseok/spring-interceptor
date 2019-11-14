@@ -11,10 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Component
-@RequiredArgsConstructor
 public class CookieUtil {
 
-  private AppProperties appProperties;
+  private final AppProperties appProperties;
+
+  public CookieUtil(AppProperties appProperties) {
+    this.appProperties = appProperties;
+  }
 
   public void create(HttpServletResponse httpServletResponse, String name, String value, Boolean secure, Integer maxAge) {
     Cookie cookie = new Cookie(name, value);

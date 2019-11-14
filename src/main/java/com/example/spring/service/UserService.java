@@ -1,11 +1,8 @@
 package com.example.spring.service;
 
 import com.example.spring.domain.User;
-import com.example.spring.exception.DataNotFoundException;
 import com.example.spring.repository.UserRepository;
-import com.example.spring.util.CookieUtil;
 import com.example.spring.util.JwtUtil;
-import io.jsonwebtoken.Jwt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

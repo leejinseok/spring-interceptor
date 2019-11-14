@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 public class WelcomeController {
 
   @GetMapping
-  public String welcome(@RequestAttribute("token") String token) {
-    return token;
+  public String welcome() {
+    return "Welcome";
   }
 }
