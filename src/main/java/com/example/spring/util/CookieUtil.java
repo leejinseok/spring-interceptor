@@ -4,10 +4,8 @@ package com.example.spring.util;
 import com.example.spring.config.AppProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Component
@@ -37,11 +35,6 @@ public class CookieUtil {
     cookie.setDomain(appProperties.getDomain());
     cookie.setPath("/");
     resp.addCookie(cookie);
-  }
-
-  public String getValue(HttpServletRequest httpServletRequest, String name) {
-    Cookie cookie = WebUtils.getCookie(httpServletRequest, name);
-    return cookie != null ? cookie.getValue() : null;
   }
 }
 
