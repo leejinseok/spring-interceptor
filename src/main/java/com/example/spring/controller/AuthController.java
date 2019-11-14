@@ -10,9 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.desktop.UserSessionEvent;
 
 @RestController
 @RequestMapping(path = "/api/auth")
@@ -48,7 +46,7 @@ public class AuthController {
     return new ResponseEntity<>(session.getUsername(), HttpStatus.OK);
   }
 
-  @GetMapping("/test")
+  @GetMapping("/session")
   public String test(@RequestAttribute("session") User session) {
     return session.getUsername();
   }

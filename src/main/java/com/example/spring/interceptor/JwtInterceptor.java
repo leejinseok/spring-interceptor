@@ -1,8 +1,10 @@
 package com.example.spring.interceptor;
 
 import com.example.spring.config.JwtProperties;
+import com.example.spring.exception.NoJwtException;
 import com.example.spring.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -32,10 +34,11 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
 
       if (name .equals(jwtProperties.getName()) && !value.isEmpty()) {
         request.setAttribute("session", jwtUtil.decodeToken(value));
+        return true;
       }
     }
 
-    return true;
+    throw new NoJwtException("JWT not provided");
   }
 
   @Override
