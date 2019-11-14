@@ -47,7 +47,7 @@ public class AuthController {
   }
 
   @GetMapping("/session")
-  public String test(@RequestAttribute("session") User session) {
-    return session.getUsername();
+  public User test(@RequestAttribute("session") User session) {
+    return session;
   }
 }
