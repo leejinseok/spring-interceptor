@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.desktop.UserSessionEvent;
 
@@ -37,7 +38,7 @@ public class AuthController {
   @PostMapping("/login")
   public ResponseEntity<String> login(@RequestBody UserDto.LoginRequest dto, HttpServletResponse resp) {
     String token = userService.login(dto.getUsername(), dto.getPassword());
-    cookieUtil.create(resp, jwtProperties.getName(), token, false, -1);
+    cookieUtil.add(resp, jwtProperties.getName(), token, false, -1);
     return new ResponseEntity<>(token, HttpStatus.OK);
   }
 
@@ -45,5 +46,10 @@ public class AuthController {
   public ResponseEntity<String> logout(@RequestAttribute("session") User session, HttpServletResponse resp) {
     cookieUtil.clear(resp, jwtProperties.getName());
     return new ResponseEntity<>(session.getUsername(), HttpStatus.OK);
+  }
+
+  @GetMapping("/test")
+  public String test(@RequestAttribute("session") User session) {
+    return session.getUsername();
   }
 }
